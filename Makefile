@@ -1,4 +1,4 @@
-COMPILER = clang++
+COMPILER = c++
 
 server:
 	$(COMPILER) ./server/server.cpp -o ./server/server

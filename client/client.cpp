@@ -31,10 +31,13 @@ int main()
         std::cerr << errno << std::endl;
         return -2;
     }
-    std::cout << "Connected to Server on port " << port << std::endl;
 
     char buffer[chunkSize];
     system("clear");
+    std::cout << "Connected to Server on port " << port << std::endl;
+    std::cout << "Enter 'quit' to exit" << std::endl;
+
+    // loop with blocking function calls - break on error or user quit
     while (true)
     {
         // send data
