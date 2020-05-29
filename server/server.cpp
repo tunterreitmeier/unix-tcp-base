@@ -13,12 +13,19 @@ int main()
     unsigned int chunkSize = 4096;
 
     // create socket
-    int tcpSocket = socket(AF_INET, SOCK_STREAM, 0);
+    static int tcpSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (tcpSocket == -1)
     {
         std::cerr << "Socket creation failed" << std::endl;
         return 1;
     }
+
+    // catch premature exit
+    signal(SIGINT, [](int signum) {
+        std::cout << "Interrupt signal (" << signum << ") received.\n";
+        shutdown(tcpSocket, SHUT_RDWR);
+        exit(signum);
+    });
 
     // bind listener to port
     sockaddr_in hint;
