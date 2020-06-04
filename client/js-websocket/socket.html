@@ -3,16 +3,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style type="text/css">
+        .active { color: teal; }
+    </style>
 </head>
 <body>
+    <h1>Websocket Test Chat</h1>
+    <h2>Status: <span id="status">inactive</span></h2>
+    <div class="messages">
+
+    </div>
+    <form>
+        <label for="message"></label>
+        <input type="text" name="message" placeholder="Message" id="message">
+        <button type="submit" id="sender">Send</button>
+    </form>
     <script>
-        const socket = new WebSocket('ws://localhost:3020');
-            socket.addEventListener('open', function (event) {
-                socket.send('Hello Server!');
+        const start = async () => {
+            const container = document.querySelector('div.messages');
+            const sender = document.querySelector('button#sender');
+            const input = document.querySelector('input#message');
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                socket.send(input.value);
+                input.value = '';
+                return false;
             });
-            socket.addEventListener('message', function (event) {
-                console.log('Message from server ', event.data);
+
+            const socket = await new WebSocket('ws://localhost:3020');
+            socket.addEventListener('open', () => {
+                console.log("Opened Socket");
+                const displayStatus = document.querySelector('span#status');
+                displayStatus.classList.add('active')
+                displayStatus.innerHTML = 'Active';
             });
+
+            socket.addEventListener('message', () => {
+                console.log('Message from server:', event.data);
+                createMessage(event.data);
+            });
+
+            const createMessage = (content) => {
+                const el = document.createElement('div');
+                el.innerHTML = content;
+                container.append(el);
+            };
+
+        };
+        start();
     </script>
 </body>
 </html>

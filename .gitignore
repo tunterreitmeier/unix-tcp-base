@@ -1,3 +1,8 @@
-.DS_Store
-client/client
-server/server
+*
+!server2.cpp
+!Makefile
+!*.cpp
+!**/*.cpp
+!server/**/*.cpp
+!.vscode
+!client/js-websocket

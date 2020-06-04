@@ -35,7 +35,7 @@ int main()
     char buffer[chunkSize];
     system("clear");
     std::cout << "Connected to Server on port " << port << std::endl;
-    std::cout << "Enter 'quit' to exit" << std::endl;
+    std::cout << "Enter 'quit' to quit" << std::endl;
 
     // loop with blocking function calls - break on error or user quit
     while (true)
@@ -59,7 +59,7 @@ int main()
         // receive response
         memset(buffer, 0, chunkSize);
         ssize_t bytesReceived = recv(tcpSocket, buffer, chunkSize, 0);
-        std::cout << "Received data: " << buffer << std::endl;
+        std::cout << "Received data:\n" << buffer << std::endl;
         if (bytesReceived == -1)
         {
             std::cerr << "Error receiving server data: " << errno << std::endl;
