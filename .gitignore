@@ -1,8 +1,8 @@
 *
-!server2.cpp
+!server
+!client
 !Makefile
 !*.cpp
-!**/*.cpp
-!server/**/*.cpp
 !.vscode
+!.vscode/*
 !client/js-websocket
